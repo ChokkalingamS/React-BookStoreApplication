@@ -1,3 +1,17 @@
+body
+{
+  background-color: whitesmoke;
+}
+.link
+{
+  color: inherit;
+  text-decoration: none;
+}
+.categorylink:hover
+{
+  color:red;
+}
+
 .bookName
 {
     word-wrap: break-word;
@@ -5,13 +19,44 @@
 
 .bookThumbnail
 {
-    width:15rem;
-    height:18rem;
+    width:19rem;
+    height:20rem;
 }
+.card
+{
+  width:19rem;
+  box-shadow: 10px 13px 39px -8px rgba(0,0,0,0.69) !important;
+-webkit-box-shadow: 10px 13px 39px -8px rgba(0,0,0,0.69) !important;
+-moz-box-shadow: 10px 13px 39px -8px rgba(0,0,0,0.69) !important;
+}
+
+
+.categorylink
+{
+  color:black;
+  font-size: 1.1rem;
+  text-decoration: none;
+  font-family:Roboto,Open-Sans,Helvetica-Neue,sans-serif;
+}
+
 .bookContent
 {
-  width:15rem;
+  max-height:min-content;
 }
+
+/* .moreinfobutton
+{
+  margin-left:10rem !important;
+} */
+
+#signin-nav,.avatar
+{
+  /* display: flex; */
+  margin-left:59rem !important;
+  
+}
+
+
 
 .home
 {
@@ -29,18 +74,250 @@
   margin-top: 2rem;
 }
 
-.booksContainer
+.booksContainer,.upcomingbooks
 {
-  display: grid;
+  /* display: grid;
   grid-template-columns:1fr 1fr 1fr;
+  justify-items: center;
+  gap:1rem; */
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    justify-content: center;
+}
+
+.CategorybooksContainer
+{
+  display:flex;
+  flex-wrap: wrap;
+  gap:2.5rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  justify-content: center;
+  margin-top:0rem;
+  margin-bottom:2rem; 
+}
+
+
+.individualbook
+{
+  margin-top:0.5rem;
+  display: flex;
   gap:1rem;
-  /* margin-left:5rem; */
+  justify-content:center;
+  align-items: center;
+}
+.bookdetails
+{
+  width:50rem;
+  font-family:Roboto,Open-Sans,Helvetica-Neue,sans-serif;
+}
+
+
+.mycart,.orderbooklist
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap:2rem;
+    margin-bottom:2rem;
+    
+}
+.Orderbookcontainer
+{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top:5rem;
+}
+.cartcontainer,.ordercontainer,.orderedbooklist
+{
+  display: flex;
+  gap:1rem;
+  justify-content:center;
+  align-items: center;
+  height:fit-content;
+}
+.customerbooklist
+{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap:2rem;
+  margin-bottom:2rem;
+  margin-top: 2rem;
+}
+
+.customerorder
+{
+  display: flex;
+  gap:1rem;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.buttonContainer
+{
+  display: flex;
+  gap:1rem;
+  justify-content: space-between;
+}
+
+/* Book warning Message */
+.bookleftalert
+{
+  color:red;
+}
+
+/* Counter */
+.addbook
+{
+  display: flex;
+  gap:1rem;
+  align-items: center;
+}
+
+/* Userlist */
+#table
+{
+  margin:3rem auto;
+  width:65rem;  
+}
+
+.useraddress
+{
+    word-break: break-all !important;
+}
+
+/* Edit Book */
+.booktextfieldcontainer
+{
+  display: flex;
+  justify-content: space-around;
+  margin-top:2rem;
+}
+.booktextfield
+{
+  margin-bottom:2rem !important;
+  width:25rem;
+}
+
+
+.updatecancelbutton
+{
+  display: flex;
+  justify-content: space-around;
+}
+
+
+/*Profile Update Page */
+.profiletextfieldcontainer
+{
+  display: flex;
+  flex-direction: column;
+  margin-top: 2rem;
+  align-items: center
+}
+
+.profiletextfield
+{
+  width:30rem;
 }
 
 
 
 
-/* .book{
+/* Signup */
+.signupcontainer,.logincontainer
+{
   display: flex;
+  align-items: stretch;
+  justify-content: space-evenly;
+  gap:2rem;
+}
+.signup
+{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+
+
+.login
+{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top:7rem;
+}
+.accountlogin
+{
+    display: flex;
+    gap:8rem;
+    margin-top:1rem;
+}
+.accounttext
+{
+  color: red;
+}
+
+.signuptextfield,.logintextfield
+{
+  width:25rem !important;
+  margin-bottom: 2rem !important;
+}
+
+.booklogo1
+{
+  width:25rem;
+  height: 25rem;
+}
+
+.loginbuttoncontainer
+{ 
+    display: flex;
+    gap:10rem;
+}
+
+/* Forgotpassword Page */
+.forgotpassword,.updatepassword
+{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top:5rem;
+}
+.forgotpasswordheading
+{
+  margin-bottom:3rem !important;
+}
+
+.forgottextfield
+{
+  width:25rem !important;
+  margin-bottom: 2rem !important;
+}
+
+.forgotpasswordback
+{
+  margin-left:20rem !important;
   
-} */
+}
+.updatepasswordheading
+{
+  margin-bottom:2rem !important;
+}
+.updatepassword
+{
+  margin-top:8rem;
+}
+.updatepasswordtextfield
+{
+  width:20rem !important;
+  margin-bottom: 2rem !important;
+}
