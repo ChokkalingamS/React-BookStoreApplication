@@ -49,14 +49,17 @@ body
   margin-left:10rem !important;
 } */
 
-#signin-nav,.avatar
+/* #signin-nav,.avatar
 {
   /* display: flex; */
-  margin-left:59rem !important;
+  /* margin-left:59rem !important; */
   
+/* } */
+
+#signin-nav,.avatar
+{
+  margin-left: auto !important;
 }
-
-
 
 .home
 {
@@ -178,6 +181,7 @@ body
   display: flex;
   gap:1rem;
   align-items: center;
+  margin-top:0.5rem;
 }
 
 /* Userlist */
@@ -198,11 +202,13 @@ body
   display: flex;
   justify-content: space-around;
   margin-top:2rem;
+  gap:1rem;
 }
 .booktextfield
 {
   margin-bottom:2rem !important;
   width:25rem;
+  height: 4rem;
 }
 
 
@@ -210,8 +216,18 @@ body
 {
   display: flex;
   justify-content: space-around;
+  margin-top:2rem;
+  gap:1rem;
+  margin-bottom: 2rem;
 }
 
+.addcancelbutton
+{
+  display:flex;
+  gap:3rem;
+  justify-content: space-around;
+  margin-bottom: 2rem;
+}
 
 /*Profile Update Page */
 .profiletextfieldcontainer
@@ -225,6 +241,8 @@ body
 .profiletextfield
 {
   width:30rem;
+  height:4rem;
+  margin-bottom:1.5rem !important;
 }
 
 
@@ -240,19 +258,20 @@ body
 }
 .signup
 {
-  display: flex;
+  /* display: flex;
   flex-direction: column;
-  align-items: center;
-  margin-top: 2rem;
+  align-items: center; */
+  margin-top:3rem;
+  height:30rem !important;
 }
 
 
 
 .login
 {
-  display: flex;
+  /* display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center; */
   margin-top:7rem;
 }
 .accountlogin
@@ -269,13 +288,15 @@ body
 .signuptextfield,.logintextfield
 {
   width:25rem !important;
-  margin-bottom: 2rem !important;
+  height:4rem !important;
+  margin-bottom:1rem !important;
 }
 
 .booklogo1
 {
   width:25rem;
   height: 25rem;
+  margin-top:3rem;
 }
 
 .loginbuttoncontainer
@@ -301,6 +322,7 @@ body
 {
   width:25rem !important;
   margin-bottom: 2rem !important;
+  height:4rem !important;
 }
 
 .forgotpasswordback
@@ -320,4 +342,67 @@ body
 {
   width:20rem !important;
   margin-bottom: 2rem !important;
+  height:4rem;
+}
+
+
+.moreaction
+{
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-evenly;
+}
+
+.addcartbutton
+{
+  position: relative !important;
+  margin-left:9rem !important;
+}
+
+#nav
+{
+  background-color: #232f3e;
+  
+}
+
+.css-10ltm04-MuiToolbar-root
+{
+  display: flex !important;
+  gap:2rem;
+}
+
+
+.success
+{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap:1rem;
+  margin-top:4rem;
+}
+
+.success img 
+{
+  height:20rem;
+  width: 20rem;
+}
+
+ .confirm img
+{
+  height:25rem;
+  width: 25rem;
+}
+
+.confirm
+{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap:1rem;
+  margin-top:3rem;
+}
+
+.confirm p
+{
+  margin-top:-1rem;
 }
