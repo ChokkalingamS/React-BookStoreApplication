@@ -19,6 +19,10 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import emptycart from './emptycart.svg';
 import noorder from './noorder.svg';
+
+
+
+
 export function Dashboard() {
   const [data, setData] = useState(null);
   const token = localStorage.getItem('$auth');
@@ -257,7 +261,7 @@ export function OrderBook() {
   useEffect(getBooks, [id,token]);
   
   return (<div className='Orderbookcontainer'>
-    {!(data) ? <div>{<CircularProgress id='orderbookprogress' color='warning'></CircularProgress>}</div> : <PlaceOrder data={data} showcount={true} />}
+    {!(data) ? <div>{<CircularProgress id='orderprogress' color='warning'></CircularProgress>}</div> : <PlaceOrder data={data} showcount={true} />}
   </div>);
 }
 

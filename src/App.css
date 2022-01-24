@@ -501,6 +501,11 @@ body
   margin-top:8rem;
 
 }
+#orderprogress
+{
+  margin-top:8rem;
+}
+
 #dataprogress
 {
   position: absolute;

@@ -19,7 +19,7 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-
+import noorder from './noorder.svg';
 import { forwardRef } from "react";
 
 import Snackbar from '@mui/material/Snackbar';
@@ -29,6 +29,7 @@ export function AdminOrderpage() {
   const [data, setData] = useState(null);
   const token = localStorage.getItem('$auth');
   const Email = localStorage.getItem('Email');
+  const [show,setShow]=useState(0);
 
   const getOrderData = () => {
     axios(
@@ -38,18 +39,32 @@ export function AdminOrderpage() {
         data: { Email },
         headers: { 'x-auth-token': token }
       }).then(response => setData(response.data));
+
+      setTimeout(() => {
+        setShow(1)
+      }, 3000);
   };
   
   useEffect(getOrderData, [Email,token]);
-  
-  return (<div className='orders'>
-    {!(data) ? <div>Books Not yet ordered</div> : (data.length) ?
-      <div className='customerbooklist'>
-        {data.map((data, i) => { return (<div key={i}><AdminBooks data={data} /> </div>); })}
-      </div> : <div>Books Not yet ordered</div>}
-  </div>);
 
+  return (<div>
+    {(show === 0) && <CircularProgress id='orderpageprogress' color='success'></CircularProgress>}
+     <div className='heading'><Typography gutterBottom variant="h5" component="div" align="left">My Orders</Typography></div>
+  <div className='orders'>
+  
+  {((!data) || !(data.length)) ? (show) ?<div className='emptyorder'><img src={noorder} alt='logo'/></div> :''
+
+    :<div className='customerbooklist'>
+      {data.map((data, i) => { return (<div key={i}><AdminBooks data={data} /> </div>); })}
+    </div>}
+</div>
+</div>);
 }
+
+
+
+
+
 function AdminBooks({ data }) {
   const { FirstName, LastName, Email, Mobile, Address, OrderedBooks } = data;
   
