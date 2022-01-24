@@ -332,10 +332,11 @@ function PlaceOrder({ data }) {
             <Rating name="half-rating-read" className='detail' defaultValue={+rating} precision={0.5} readOnly />
             {(Available)&&<p className='detail'>Total : {count} Nos</p>}
             <Typography variant="subtitle1" className='detail'><b>Price : Rs.{Price * count}</b></Typography>
+            {(Available)?<p>Payment Method : Cash On Delivery Only Available</p>:''}
           </Typography>
 
           <div>
-            {(Available < 12 && Available > 0) ? <p className='bookleftalert'>Hurry Up!!!  Only {Available} books left </p> : (Available===0) && <p className='bookleftalert'>Books Sold Out</p>}
+            {(Available < 12 && Available > 0) ? <p className='bookleftalert'>Hurry Up!!!  Only {Available} books left </p> : (Available===0) ? <p className='bookleftalert'>Books Sold Out</p> : ''}
 
             {(Available>0) &&
               <div className='buttonContainer'>
@@ -421,7 +422,7 @@ function GetOrderBooks({ data }) {
             <p>Rating : {Rating}</p>
             <p>Total  : {total} Nos</p>
             <Typography color="text.primary" variant="subtitle1"> <b>Price  : Rs.{Price}</b></Typography>
-
+            <p>Payment Method : Cash On Delivery</p>
             <p>Expected Delivery : {ExpectedDelivery} </p></Typography>
         </div></CardContent>
     </div>
