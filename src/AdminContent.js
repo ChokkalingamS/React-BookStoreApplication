@@ -39,9 +39,9 @@ export function AdminOrderpage() {
         headers: { 'x-auth-token': token }
       }).then(response => setData(response.data));
   };
-  console.log(data);
-  useEffect(getOrderData, [Email]);
-  console.log(data);
+  
+  useEffect(getOrderData, [Email,token]);
+  
   return (<div className='orders'>
     {!(data) ? <div>Books Not yet ordered</div> : (data.length) ?
       <div className='customerbooklist'>
@@ -52,7 +52,7 @@ export function AdminOrderpage() {
 }
 function AdminBooks({ data }) {
   const { FirstName, LastName, Email, Mobile, Address, OrderedBooks } = data;
-  // const{_id,BookName,Author,Description,Language,Publisher,Imageurl,Price,total,PublicationDate,Rating,ExpectedDelivery}=
+  
   return (<div>
     <div>
       {OrderedBooks.map((data, i) => {
@@ -102,7 +102,7 @@ export function Edit() {
         headers: { 'x-auth-token': token }
       }).then(response => setData(response.data));
   };
-  useEffect(getBooks, [id]);
+  useEffect(getBooks, [id,token]);
   return (<div>
     {!(data) ? <div>Loading</div> : <EditBookData data={data} />}
   </div>);
@@ -213,7 +213,7 @@ Genre:yup.string().typeError('Field Should not be empty').required('Required Fie
     <TextField variant="outlined" onInput={(e=>setAvailable(e.target.value))} type='number'
     onChange={handleChange} onBlur={handleBlur} error={errors.Available && touched.Available} value={values.Available}
     helperText={errors.Available && touched.Available && errors.Available}  name='Available' id='Available'
-      color='success' label='Available' type='text' className='booktextfield' placeholder="Available" /><br />
+      color='success' label='Available'  className='booktextfield' placeholder="Available" /><br />
       
     <TextField variant="outlined" onInput={(e=>setPublisher(e.target.value))}
     onChange={handleChange} onBlur={handleBlur} error={errors.Publisher && touched.Publisher} value={values.Publisher}
@@ -269,9 +269,9 @@ export function GetAllUsers() {
         data: { Email },
         headers: { 'x-auth-token': token }
       }).then(response => setData(response.data));
-    console.log(data, 'userlist');
+    
   };
-  useEffect(get, []);
+  useEffect(get, [token,Email]);
   return (<div>
     {(!data) ? <div>...Loading</div> : <div>
     <TableContainer component={Paper} id="table">
@@ -411,7 +411,7 @@ Genre:yup.string().typeError('Field Should not be empty').required('Required Fie
     <TextField variant="outlined" onInput={(e=>setAvailable(e.target.value))} type='number'
     onChange={handleChange} onBlur={handleBlur} error={errors.Available && touched.Available} value={values.Available}
     helperText={errors.Available && touched.Available && errors.Available}  name='Available' id='Available'
-      color='success' label='Available' type='text' className='booktextfield' placeholder="Available" /><br />
+      color='success' label='Available'  className='booktextfield' placeholder="Available" /><br />
       
     <TextField variant="outlined" onInput={(e=>setPublisher(e.target.value))}
     onChange={handleChange} onBlur={handleBlur} error={errors.Publisher && touched.Publisher} value={values.Publisher}

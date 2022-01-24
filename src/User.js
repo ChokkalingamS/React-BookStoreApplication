@@ -10,7 +10,6 @@ import Rating from '@mui/material/Rating';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CircularProgress from '@mui/material/CircularProgress';
-import { InputAdornment, Tooltip } from '@mui/material';
 import { forwardRef } from "react";
 import Stack from '@mui/material/Stack';
 import Snackbar from '@mui/material/Snackbar';
@@ -34,12 +33,8 @@ export function Dashboard() {
     }).then(response => setData(response.data));
   };
 
-  useEffect(getData, [Email]);
-  console.log(data);
-  // if(data)
-  // {
-  //   const{FirstName,LastName,Email,Mobile,Address,Status}=data
-  // }
+  useEffect(getData, [Email,token]);
+ 
   return (
     <div className='dashboard'>
       {!(data) ? <div><CircularProgress id='profileprogress' color='success'></CircularProgress></div> :
@@ -147,7 +142,6 @@ export function MyCart() {
   const [data, setData] = useState('');
   const Email = localStorage.getItem('Email');
   const token = localStorage.getItem('$auth');
-  const [progress,setProgress]=useState(0)
   const [show,setShow]=useState(0);
 
   const getCartData = () => {
@@ -164,7 +158,7 @@ export function MyCart() {
       }, 3000);
 
   };
-  useEffect(getCartData, [Email]);
+  useEffect(getCartData, [Email,token]);
   return (<div><div className='heading'><Typography variant="h4" align='left' component="div">My Cart</Typography></div>
           {(show === 0) && <CircularProgress id='cartprogress' color='success'></CircularProgress>}
     <div className='mycart'>
@@ -205,7 +199,7 @@ function CartBooks({ data, getCartData }) {
         headers: { 'x-auth-token': token }
       }).then(response =>response.data).then(data=>setMessage({msg:data.Msg,result:'success'}))
       .catch(error=>setMessage({msg:error.response.data.Msg,result:'error'})).then(handleClick)
-      .then(() =>setTimeout(() =>getCartData(),1000) );
+      .then(() =>setTimeout(() =>getCartData(),500) );
   };
   
   return (<div>
@@ -260,8 +254,8 @@ export function OrderBook() {
         headers: { 'x-auth-token': token }
       }).then(response => setData(response.data));
   };
-  useEffect(getBooks, [id]);
-  console.log(data, 'orderbook');
+  useEffect(getBooks, [id,token]);
+  
   return (<div className='Orderbookcontainer'>
     {!(data) ? <div>{<CircularProgress id='orderbookprogress' color='warning'></CircularProgress>}</div> : <PlaceOrder data={data} showcount={true} />}
   </div>);
@@ -325,7 +319,7 @@ function PlaceOrder({ data }) {
           </Typography>
 
           <div>
-            {(Available < 12 && Available > 0) ? <p className='bookleftalert'>Hurry Up!!!  Only {Available} books left </p> : (Available==0) && <p className='bookleftalert'>Books Sold Out</p>}
+            {(Available < 12 && Available > 0) ? <p className='bookleftalert'>Hurry Up!!!  Only {Available} books left </p> : (Available===0) && <p className='bookleftalert'>Books Sold Out</p>}
 
             {(Available>0) &&
               <div className='buttonContainer'>
@@ -379,8 +373,8 @@ export function MyOrders() {
       }, 3000);
 
   };
-  useEffect(getOrderData, [Email]);
-  console.log(data);
+  useEffect(getOrderData, [Email,token]);
+  
   return (<div>
       {(show === 0) && <CircularProgress id='orderpageprogress' color='success'></CircularProgress>}
        <div className='heading'><Typography gutterBottom variant="h5" component="div" align="left">My Orders</Typography></div>

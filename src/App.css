@@ -156,9 +156,9 @@ body
 
 .customerorder
 {
-  display: flex;
+  display:grid;
   gap:1rem;
-  align-items: center;
+  grid-template-columns: repeat(3,1fr);
   margin-bottom: 2rem;
 }
 

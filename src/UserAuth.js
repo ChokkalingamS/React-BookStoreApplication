@@ -1,7 +1,7 @@
-import { useState, useContext, useEffect } from 'react';
+import { useState,  useEffect } from 'react';
 import axios from 'axios';
 import { useHistory, useParams } from "react-router-dom";
-import { user_url, context } from './App';
+import { user_url } from './App';
 import booklogo1 from './booklogo1.svg';
 import forgotlogo from './forgotlogo.svg';
 import Button from '@mui/material/Button';
@@ -38,7 +38,7 @@ export function Signup() {
 
   let validation=yup.object({
     FirstName:yup.string().required('Required Field'),
-    LastName:yup.string().required('Required Field'),
+    LastName:yup.string().required('Required Field'), // eslint-disable-next-line
     Email:yup.string().required('Required Field').matches(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Must Be a Valid Email'),
     Password: yup.string().min(8, 'Minimum 8 Characters Required').required('Required Field')
   })
@@ -94,7 +94,7 @@ export function Signup() {
       helperText={errors.Email && touched.Email && errors.Email} name='Email' id='Email'
       className='signuptextfield' placeholder="Email" /><br/>
 
-      <TextField type="text"  type={visible}
+      <TextField   type={visible}
       onChange={handleChange} onBlur={handleBlur} error={errors.Password && touched.Password} value={values.Password}
       helperText={errors.Password && touched.Password && errors.Password} name='Password' id='Password'
       className='signuptextfield' placeholder="Password"
@@ -153,7 +153,7 @@ export function Login() {
 
 
   let validation=yup.object(
-  {
+  {                                                                         // eslint-disable-next-line
     Email:yup.string().required('Required Field').matches(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Must Be a Valid Email'),
     Password: yup.string().min(8, 'Minimum 8 Characters Required').required('Required Field')
   })
@@ -215,7 +215,7 @@ export function Login() {
        placeholder="Email" /><br/>
 
 
-      <TextField type="text"className='logintextfield'  
+      <TextField className='logintextfield'  
       onChange={handleChange} onBlur={handleBlur} error={errors.Password && touched.Password} value={values.Password}
       helperText={errors.Password && touched.Password && errors.Password}  name='Password' id='Password' type={visible}
       placeholder="Password"   InputProps={{
@@ -252,7 +252,7 @@ export function Login() {
 }
 export function ForgotPassword() {
   let history = useHistory();
-  const [Email, setEmail] = useState('');
+  const [, setEmail] = useState('');
   
   const [progress, setProgress] = useState(0); // Progress Bar
   const [Message, setMessage] = useState('');
@@ -270,7 +270,7 @@ export function ForgotPassword() {
 
   
   let validation=yup.object(
-    {
+                                                                         {// eslint-disable-next-line
       Email:yup.string().required('Required Field').matches(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Must Be a Valid Email'),
     })
   
@@ -392,8 +392,8 @@ export function UpdatePassword()
 
     <form onSubmit={handleSubmit}>
 
-    <TextField type="text"   className='updatepasswordtextfield' 
-     onChange={handleChange} onBlur={handleBlur} error={errors.Password && touched.Password}  
+    <TextField    className='updatepasswordtextfield' 
+     onChange={handleChange} onBlur={handleBlur} error={errors.Password && touched.Password}  value={values.Password}
      helperText={errors.Password && touched.Password && errors.Password}  name='Password' id='Password' type={visible}
      placeholder="Password"   InputProps={{
        endAdornment: (<InputAdornment position="start">

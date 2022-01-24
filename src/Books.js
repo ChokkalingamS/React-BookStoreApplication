@@ -33,13 +33,7 @@ export function Home() {
         headers: { 'x-auth-token': token }
       }).then(response => setData(response.data));
   };
-  useEffect(getBooks, []);
-
-
-  if (data) {
-    console.log(data);
-
-  }
+  useEffect(getBooks, [token]);
 
   return (
     <div className='booksContainer'>
@@ -107,7 +101,7 @@ function Books({ data,getBooks }) {
           <IconButton onClick={() => history.push(`/bookinfo/${_id}`)}><InfoIcon /></IconButton>
         </Typography>
 
-        <Typography variant="body2" color="text.primary" variant="subtitle2">
+        <Typography  color="text.primary" variant="subtitle2">
           <p className='detail'>Author : {Author}</p>
           <Rating name="half-rating-read" className='detail' defaultValue={+rating} precision={0.5} readOnly />
           <Typography variant="subtitle1"><b className='detail'>Price : Rs.{Price}</b></Typography>
@@ -150,8 +144,8 @@ export function NewArrivals() {
         method: 'GET'
       }).then(response => setData(response.data));
 
-    console.log(data);
   };
+  // eslint-disable-next-line
   useEffect(getBooks, []);
 
   return (<div>
@@ -167,7 +161,7 @@ export function NewArrivals() {
             <div>
               <CardContent>
                 <Typography gutterBottom variant="h6" component="div"><p>{data.BookName}</p> </Typography>
-                <Typography variant="body2" color="text.primary" variant="subtitle2">
+                <Typography  color="text.primary" variant="subtitle2">
                   <p>Author : {data.Author}</p>
                   <p>Price : Rs.{data.Price}</p>
                   <p>Language :{data.Language}</p>
@@ -207,12 +201,12 @@ function Category() {
   return (<div className='category'>
     <Typography variant="h5" align='center' component="div">Browse By Category</Typography><br /><br />
 
-    <Typography variant="body2" color="text.primary" variant="h6">Genre</Typography>
+    <Typography  color="text.primary" variant="h6">Genre</Typography>
 
     {(Genre) && Genre.map((data, i) => {
       return <Link key={i} className='categorylink' to={`/category/${data}`}><p>{data}</p></Link>;
     })}
-    <Typography variant="body2" color="text.primary" variant="h6">Author</Typography>
+    <Typography  color="text.primary" variant="h6">Author</Typography>
 
     {(Author) && Author.map((data, i) => {
       return <Link key={i} to={`/category/${data}`} className='categorylink'><p>{data}</p></Link>;
@@ -234,13 +228,7 @@ export function BooksCategory() {
         headers: { 'x-auth-token': token }
       }).then(response => setData(response.data));
   };
-  useEffect(getBooks, []);
-
-
-  if (data) {
-    console.log(data);
-
-  }
+  useEffect(getBooks, [token]);
 
   return (
     <div className='home'>
@@ -253,7 +241,7 @@ export function BooksCategory() {
 export function FilterCategory() {
   const { id } = useParams();
   const [data, setData] = useState([]);
-  const token = localStorage.getItem('$auth');
+  
   const [Url, setUrl] = useState('');
 
   const urlchange = () => {
@@ -272,7 +260,6 @@ export function FilterCategory() {
       {
         url: `${book_url}/${Url}`,
         method: 'GET',
-        headers: { 'x-auth-token': token }
       }).then(response => setData(response.data));
 
   };
@@ -293,14 +280,12 @@ export function FilterCategory() {
 export function BookInfo() {
   const { id } = useParams();
   const [data, setData] = useState(null);
-  const token = localStorage.getItem('$auth');
-
+  
   const getBooks = () => {
     axios(
       {
         url: `${book_url}/getbook/${id}`,
         method: 'GET',
-        headers: { 'x-auth-token': token }
       }).then(response => setData(response.data));
   };
   useEffect(getBooks, [id]);
@@ -309,7 +294,7 @@ export function BookInfo() {
   </div>);
 }
 function IndividualBookData({ data }) {
-  var { BookName, Author, Description, Language, Publisher, Imageurl, Price, PublicationDate, Rating: rating, _id } = data;
+  var { BookName, Author, Description, Language, Publisher, Imageurl, Price, PublicationDate, Rating: rating } = data;
   return (
     <Card style={{ height: '100vh' }}>
       <div className='individualbook'>
