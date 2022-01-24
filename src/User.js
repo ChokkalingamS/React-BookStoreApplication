@@ -1,6 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect,forwardRef } from 'react';
+
 import axios from 'axios';
 import { useHistory, useParams } from "react-router-dom";
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
@@ -10,19 +14,18 @@ import Rating from '@mui/material/Rating';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CircularProgress from '@mui/material/CircularProgress';
-import { forwardRef } from "react";
 import Stack from '@mui/material/Stack';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+
 import { user_url, book_url } from './App';
-import { useFormik } from 'formik';
-import * as yup from 'yup';
-import emptycart from './emptycart.svg';
-import noorder from './noorder.svg';
+
+import emptycart from './Images/emptycart.svg';
+import noorder from './Images/noorder.svg';
 
 
 
-
+// User Profile Page
 export function Dashboard() {
   const [data, setData] = useState(null);
   const token = localStorage.getItem('$auth');
@@ -45,6 +48,8 @@ export function Dashboard() {
         <div className='profile'><UpdateProfile data={data} /></div>}
     </div>);
 }
+
+
 function UpdateProfile({ data })
  {
 
@@ -142,6 +147,10 @@ function UpdateProfile({ data })
   </div>
   </div>);
 }
+
+
+
+// My Cart Page
 export function MyCart() {
   const [data, setData] = useState('');
   const Email = localStorage.getItem('Email');
@@ -244,6 +253,9 @@ function CartBooks({ data, getCartData }) {
 
     </div>);
 }
+
+
+// Place Order page
 export function OrderBook() {
 
   const { id } = useParams();
@@ -328,7 +340,6 @@ function PlaceOrder({ data }) {
             {(Available>0) &&
               <div className='buttonContainer'>
 
-
                 <div className='addbook'>
                   <Button onClick={() => setCount(count + 1)} variant='outlined'>+</Button>
                   <Typography>{count}</Typography>
@@ -337,13 +348,10 @@ function PlaceOrder({ data }) {
                 <Button onClick={() => orderBook(_id, count)} variant='contained' color='warning'>Place Order</Button>
 
               </div>}
-
           </div>
         </CardContent>
       </div>
-    </Card>
-              
-              
+    </Card>   
          {/* Snack Bar */}
      <Stack spacing={2} sx={{ width: '100%' }}>
         <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
@@ -352,11 +360,11 @@ function PlaceOrder({ data }) {
           </Alert>
         </Snackbar>
       </Stack>
-    
-
-    
     </div>);
 }
+
+
+// Books Order Page
 export function MyOrders() {
   const [data, setData] = useState(null);
   const token = localStorage.getItem('$auth');

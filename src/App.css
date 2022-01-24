@@ -2,6 +2,7 @@ body
 {
   background-color: whitesmoke;
 }
+
 .link
 {
   color: inherit;
@@ -53,8 +54,7 @@ body
 .home
 {
   display: flex;
-  margin-top:2rem;
-  
+  margin-top:2rem;  
 }
 
 .category
@@ -231,8 +231,6 @@ body
 }
 
 
-
-
 /* Signup */
 .signupcontainer,.logincontainer
 {
@@ -243,9 +241,6 @@ body
 }
 .signup
 {
-  /* display: flex;
-  flex-direction: column;
-  align-items: center; */
   margin-top:3rem;
   height:30rem !important;
 }
@@ -254,11 +249,9 @@ body
 
 .login
 {
-  /* display: flex;
-  flex-direction: column;
-  align-items: center; */
   margin-top:7rem;
 }
+
 .accountlogin
 {
     display: flex;
@@ -330,7 +323,6 @@ body
   height:4rem;
 }
 
-
 .moreaction
 {
   display: flex;
@@ -393,10 +385,7 @@ body
 {
   height:25rem;
   width: 25rem;
-
 }
-
-
 
 .confirm
 {
@@ -475,7 +464,6 @@ body
   position: absolute;
   margin-left:40rem;
   margin-top:14.5rem;
-
 }
 
 
@@ -497,7 +485,6 @@ body
   margin-top:9rem;
 }
 
-
 #categorydataprogress
 {
   position: absolute;
@@ -511,7 +498,6 @@ body
   gap: 2rem;
   justify-content: center;
 }
-
 
 
 .heading

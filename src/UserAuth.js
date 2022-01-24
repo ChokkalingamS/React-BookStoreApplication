@@ -1,9 +1,9 @@
-import { useState,  useEffect } from 'react';
+import { useState,  useEffect,forwardRef } from 'react';
 import axios from 'axios';
 import { useHistory, useParams } from "react-router-dom";
-import { user_url } from './App';
-import booklogo1 from './booklogo1.svg';
-import forgotlogo from './forgotlogo.svg';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
@@ -12,14 +12,19 @@ import { InputAdornment, Tooltip } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import CircularProgress from '@mui/material/CircularProgress';
-import { forwardRef } from "react";
 import Stack from '@mui/material/Stack';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 
-import { useFormik } from 'formik';
-import * as yup from 'yup';
 
+import { user_url } from './App';
+import booklogo1 from './Images/booklogo1.svg';
+import forgotlogo from './Images/forgotlogo.svg';
+
+
+
+
+// User Signup Page
 export function Signup() {
 
   let history = useHistory();
@@ -59,8 +64,6 @@ export function Signup() {
       setText((text) => (text === 'Show') ? 'Hide' : 'Show');
     };
   
-
-
 
   const signUp = async (newUser) => {
     setProgress(1);
@@ -132,7 +135,7 @@ export function Signup() {
 
 
 
-
+// Login Page
 export function Login() {
   let history = useHistory();
   
@@ -248,8 +251,11 @@ export function Login() {
     
     
     </div>);
-
 }
+
+
+
+// Forgot Password
 export function ForgotPassword() {
   let history = useHistory();
   const [, setEmail] = useState('');
@@ -268,9 +274,8 @@ export function ForgotPassword() {
 
 
 
-  
   let validation=yup.object(
-                                                                         {// eslint-disable-next-line
+    {// eslint-disable-next-line
       Email:yup.string().required('Required Field').matches(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Must Be a Valid Email'),
     })
   
@@ -291,7 +296,7 @@ export function ForgotPassword() {
       }).then(response => response.data).then(data=>{setMessage({msg:data.Msg,result:'success'});}) 
       .catch((error) => setMessage({ msg: error.response.data.Msg, result: 'warning' })).then(handleClick).then(()=>setProgress(0))
   };
-console.log(Message);
+
 
   return (<div className='forgotpage'> 
 
@@ -319,19 +324,13 @@ console.log(Message);
         </Alert>
       </Snackbar>
     </Stack>
-
-    
     </div>
-
-      
-
-
-
-
     </div>);
-
-
 }
+
+
+
+// Update Password Page
 export function UpdatePassword() 
 {
   const [progress, setProgress] = useState(0);  // Progress Bar
@@ -418,8 +417,6 @@ export function UpdatePassword()
         </Alert>
       </Snackbar>
     </Stack>
-
-
   </div>);
 
 }

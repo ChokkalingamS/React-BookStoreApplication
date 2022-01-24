@@ -1,10 +1,16 @@
 import './App.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect,forwardRef } from 'react';
 import axios from 'axios';
 import { useParams,useHistory } from "react-router-dom";
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+
+import { book_url, user_url } from './App';
+import noorder from './Images/noorder.svg';
+
+// Material Ui
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import { book_url, user_url } from './App';
 import Stack from '@mui/material/Stack';
 import CircularProgress from '@mui/material/CircularProgress';
 import Table from '@mui/material/Table';
@@ -17,13 +23,10 @@ import Paper from '@mui/material/Paper';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import { useFormik } from 'formik';
-import * as yup from 'yup';
-import noorder from './noorder.svg';
-import { forwardRef } from "react";
-
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+
+
 
 export function AdminOrderpage() {
   const [data, setData] = useState(null);
@@ -31,6 +34,7 @@ export function AdminOrderpage() {
   const Email = localStorage.getItem('Email');
   const [show,setShow]=useState(0);
 
+  // Customer Orders
   const getOrderData = () => {
     axios(
       {
@@ -60,8 +64,6 @@ export function AdminOrderpage() {
 </div>
 </div>);
 }
-
-
 
 
 
@@ -104,6 +106,10 @@ function AdminBooks({ data }) {
   </div>
   );
 }
+
+
+
+// Edit Books Page
 export function Edit() {
   const { id } = useParams();
   const [data, setData] = useState(null);
@@ -267,11 +273,12 @@ Genre:yup.string().typeError('Field Should not be empty').required('Required Fie
         </Snackbar>
       </Stack>
   </div>);
-
-
-
-
 }
+
+
+
+
+// Get Customer List
 export function GetAllUsers() {
   const [data, setData] = useState('');
   const Email = localStorage.getItem('Email');
@@ -319,7 +326,7 @@ export function GetAllUsers() {
 
 
 
-
+// Add Books
 export function AddBookData() 
 {
   let history=useHistory()

@@ -28,8 +28,8 @@ import { Login, Signup, ForgotPassword, UpdatePassword } from './UserAuth';
 import { AdminOrderpage, Edit, GetAllUsers,AddBookData } from './AdminContent';
 import { OrderBook, MyCart, MyOrders, Dashboard } from './User';
 import { Home, NewArrivals, BooksCategory, FilterCategory, BookInfo } from './Books';
-import success from './success.svg';
-import confirm from './confirm.svg';
+import success from './Images/success.svg';
+import confirm from './Images/confirm.svg';
 
 
 
@@ -41,11 +41,10 @@ export default function App() {
     </div>
   );
 }
-// local
-// export const user_url=`http://localhost:1000/user`
-// export const book_url=`http://localhost:1000/data`
 
+// user
 export const user_url=`https://bookstore--application.herokuapp.com/user`
+// book
 export const book_url=`https://bookstore--application.herokuapp.com/data`
 
 
@@ -55,7 +54,7 @@ function Container()
   const value=localStorage.getItem('$condition');
   const usertype=localStorage.getItem('$user')
   const token=localStorage.getItem('$auth')
-
+// Route
     return(
     <div className='container'>
         
@@ -93,7 +92,7 @@ function Container()
 }
 
 
-
+// Nav Bar
 function NavigationBar()
 {
   const user=localStorage.getItem('$user')
@@ -162,7 +161,7 @@ function NavigationBar()
 
 
 
-
+// Message
 function OrderSuccess() 
 {
   let history=useHistory();

@@ -1,6 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect,forwardRef } from 'react';
 import axios from 'axios';
 import { Link, useHistory, useParams } from "react-router-dom";
+
+
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
@@ -11,23 +13,22 @@ import InfoIcon from '@mui/icons-material/Info';
 import Rating from '@mui/material/Rating';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-
 import CircularProgress from '@mui/material/CircularProgress';
-import { forwardRef } from "react";
-
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+
+
+
 import { book_url } from './App';
 
 
 
 
-
+// Home Page
 export function Home() {
 
   const [data, setData] = useState('');
   const token = localStorage.getItem('$auth');
-
 
   const getBooks = () => {
     axios(
@@ -47,7 +48,7 @@ export function Home() {
 }
 
 
-
+// Books display
 function Books({ data,getBooks }) {
   const { BookName, Author, Imageurl, Price, Rating: rating, _id } = data;
   
@@ -67,7 +68,7 @@ function Books({ data,getBooks }) {
   const handleClick = () => { setOpen(true); };
   const handleClose = () => { setOpen(false); };
 
-
+// Add to Cart
   const Cart = () => {
     axios({
       url: `${book_url}/addtocart/${_id}`,
@@ -79,7 +80,7 @@ function Books({ data,getBooks }) {
     
   };
   
-  // Delete
+  // Delete Book
   const DeleteBook = (_id) => {
     axios(
       {
@@ -139,7 +140,7 @@ function Books({ data,getBooks }) {
 }
 
 
-
+// New Arrivals
 
 export function NewArrivals() {
 
@@ -188,6 +189,8 @@ export function NewArrivals() {
 }
 
 
+
+// Category
 function Category() {
   const [Genre, setGenre] = useState(null);
   const [Author, setAuthor] = useState(null);
@@ -225,7 +228,7 @@ function Category() {
 }
 
 
-
+// All Books Display
 export function BooksCategory() {
 
   const [data, setData] = useState('');
@@ -246,14 +249,15 @@ export function BooksCategory() {
     <div className='home'>
       <div><Category /></div>
       <div className='CategorybooksContainer'>
-        {(!data.length) ? <div><CircularProgress id='categorydataprogress'></CircularProgress></div>: data.map((books, i) => { return <div className='book' key={i}><Books data={books} getBooks={getBooks} visibility={true} />   </div>; })}
+        {(!data.length) ? <div><CircularProgress id='categorydataprogress'></CircularProgress></div>
+        : data.map((books, i) => { return <div className='book' key={i}><Books data={books} getBooks={getBooks} /> </div>;})}
       </div>
     </div>);
 }
 
 
 
-
+// Filter by genre & Author
 export function FilterCategory() {
   const { id } = useParams();
   const [data, setData] = useState([]);
@@ -309,6 +313,9 @@ export function BookInfo() {
     {!(data) ? <div><CircularProgress id='newarrivaldataprogress'></CircularProgress></div> : <IndividualBookData data={data} />}
   </div>);
 }
+
+
+
 function IndividualBookData({ data }) {
   var { BookName, Author, Description, Language, Publisher, Imageurl, Price, PublicationDate, Rating: rating } = data;
   return (
