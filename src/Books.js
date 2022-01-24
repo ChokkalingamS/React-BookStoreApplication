@@ -150,7 +150,7 @@ export function NewArrivals() {
 
   return (<div>
     <div className='heading'><Typography gutterBottom variant="h5" component="div" align="left">Upcoming Books</Typography></div>
-    {(!data) ? <div>...Loading</div> :
+    {(!data) ? <div><div><CircularProgress id='dataprogress'></CircularProgress></div></div> :
       <div className='upcomingbooks'>
         {data.map((data, i) => {
           return (<Card key={i} sx={{ maxWidth: 450 }} className='card'>
