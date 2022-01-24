@@ -44,17 +44,6 @@ body
   max-height:min-content;
 }
 
-/* .moreinfobutton
-{
-  margin-left:10rem !important;
-} */
-
-/* #signin-nav,.avatar
-{
-  /* display: flex; */
-  /* margin-left:59rem !important; */
-  
-/* } */
 
 #signin-nav,.avatar
 {
@@ -75,6 +64,7 @@ body
   top:0;
   text-align: center;
   margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
 .booksContainer,.upcomingbooks
