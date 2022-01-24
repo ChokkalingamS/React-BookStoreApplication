@@ -119,7 +119,7 @@ export function Edit() {
   };
   useEffect(getBooks, [id,token]);
   return (<div>
-    {!(data) ? <div>Loading</div> : <EditBookData data={data} />}
+    {!(data) ? <div><CircularProgress id='addbookprogress' color='success'></CircularProgress></div> : <EditBookData data={data} />}
   </div>);
 }
 
