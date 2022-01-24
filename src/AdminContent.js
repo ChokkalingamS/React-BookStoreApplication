@@ -288,7 +288,7 @@ export function GetAllUsers() {
   };
   useEffect(get, [token,Email]);
   return (<div>
-    {(!data) ? <div>...Loading</div> : <div>
+    {(!data) ? <div><CircularProgress id='newarrivaldataprogress'></CircularProgress></div> : <div>
     <TableContainer component={Paper} id="table">
         <Table sx={{ minWidth:400}} aria-label="simple table">
         <TableHead>
