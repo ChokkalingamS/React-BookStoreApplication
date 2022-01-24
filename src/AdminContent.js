@@ -49,7 +49,7 @@ export function AdminOrderpage() {
 
   return (<div>
     {(show === 0) && <CircularProgress id='orderpageprogress' color='success'></CircularProgress>}
-     <div className='heading'><Typography gutterBottom variant="h5" component="div" align="left">My Orders</Typography></div>
+     <div className='heading'><Typography gutterBottom variant="h5" component="div" align="left">Customer Orders</Typography></div>
   <div className='orders'>
   
   {((!data) || !(data.length)) ? (show) ?<div className='emptyorder'><img src={noorder} alt='logo'/></div> :''
