@@ -6,7 +6,7 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { book_url, user_url } from './App';
 import Stack from '@mui/material/Stack';
-
+import CircularProgress from '@mui/material/CircularProgress';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -126,7 +126,7 @@ function EditBookData({ data })
   const [PublicationDate, setPublicationDate] = useState(publicationdate);
   const [Rating, setRating] = useState(rating);
   const [Genre,setGenre]=useState(genre)
-  const [Result, setResult] = useState('');
+  const [progress, setProgress] = useState(0);
 
   const [Message,setMessage]=useState('');
   // Snack Bar Open/Close Status
@@ -139,7 +139,7 @@ function EditBookData({ data })
   const handleClose = () => { setOpen(false); };
 
 
-  const BookData = { BookName,Imageurl,Author,Description,Publisher,Price,Language,PublicationDate,Rating,Result,Genre,Available};
+  const BookData = { BookName,Imageurl,Author,Description,Publisher,Price,Language,PublicationDate,Rating,Genre,Available};
 
   let validation=yup.object({
 BookName:yup.string().typeError('Field Should not be empty').required('Required Field'),
@@ -151,7 +151,6 @@ Price:yup.number().typeError('Must specify a number').required('Required Field')
 Language:yup.string().typeError('Field Should not be empty').required('Required Field'),
 PublicationDate:yup.string().typeError('Must specify a number').required('Required Field'),
 Rating:yup.string().typeError('Field Should not be empty').required('Required Field'),
-Result:yup.string().typeError('Field Should not be empty').required('Required Field'),
 Genre:yup.string().typeError('Field Should not be empty').required('Required Field'),  
   })
  
@@ -162,17 +161,19 @@ Genre:yup.string().typeError('Field Should not be empty').required('Required Fie
   })
 
   const updateBook = (BookData) => {
+    setProgress(1);
     axios(
       {
         url: `${book_url}/getbook/${_id}`,
         method: 'PUT',
         data: BookData,
         headers: { 'x-auth-token': token }
-      }).then(response => response.data).then(data=>{setMessage({msg:data.Msg,result:'success'});setTimeout(() => history.push('/'),2000);}) 
-      .catch((error) => setMessage({ msg: error.response.data.Msg, result: 'warning' })).then(handleClick)
+      }).then(response => response.data).then(data=>{setMessage({msg:data.Msg,result:'success'});setTimeout(() => history.goBack(),2000);}) 
+      .catch((error) => {setMessage({ msg: error.response.data.Msg, result: 'warning' });setProgress(0)}).then(handleClick)
   };
-  console.log(Result, 'Edit');
+  
   return (<div>
+    {(progress === 1) && <CircularProgress id='editbookprogress' color='success'></CircularProgress>}
       <div className='booktextfieldcontainer' >
    
     <div>
@@ -321,7 +322,7 @@ export function AddBookData()
   const [PublicationDate, setPublicationDate] = useState("");
   const [Rating, setRating] = useState("");
   const [Genre,setGenre]=useState("")
-  const [Result, setResult] = useState('');
+  const [progress, setProgress] = useState(0);
 
   const [Message,setMessage]=useState('');
   // Snack Bar Open/Close Status
@@ -334,7 +335,7 @@ export function AddBookData()
   const handleClose = () => { setOpen(false); };
 
 
-  const BookData = { BookName,Imageurl,Author,Description,Publisher,Price,Language,PublicationDate,Rating,Result,Genre,Available,Email};
+  const BookData = { BookName,Imageurl,Author,Description,Publisher,Price,Language,PublicationDate,Rating,Genre,Available,Email};
 
   let validation=yup.object({
 BookName:yup.string().typeError('Field Should not be empty').required('Required Field'),
@@ -346,7 +347,6 @@ Price:yup.number().typeError('Must specify a number').required('Required Field')
 Language:yup.string().typeError('Field Should not be empty').required('Required Field'),
 PublicationDate:yup.string().typeError('Must specify a number').required('Required Field'),
 Rating:yup.string().typeError('Field Should not be empty').required('Required Field'),
-Result:yup.string().typeError('Field Should not be empty').required('Required Field'),
 Genre:yup.string().typeError('Field Should not be empty').required('Required Field'),  
   })
  
@@ -357,6 +357,7 @@ Genre:yup.string().typeError('Field Should not be empty').required('Required Fie
   })
 
   const addBook = (BookData) => {
+    setProgress(1);
     axios(
       {
         url: `${book_url}/addbook`,
@@ -364,12 +365,13 @@ Genre:yup.string().typeError('Field Should not be empty').required('Required Fie
         data: BookData,
         headers: { 'x-auth-token': token }
       }).then(response => response.data).then(data=>{setMessage({msg:data.Msg,result:'success'});setTimeout(() => history.push('/'),2000);}) 
-      .catch((error) => setMessage({ msg: error.response.data.Msg, result: 'warning' })).then(handleClick)
+      .catch((error) => {setMessage({ msg: error.response.data.Msg, result: 'warning' });setProgress(0)}).then(handleClick)
   };
  
 
-  console.log(Result, 'Edit');
+  
   return (<div>
+    {(progress === 1) && <CircularProgress id='addbookprogress' color='success'></CircularProgress>}
       <div className='booktextfieldcontainer' >
    
     <div>
@@ -429,7 +431,7 @@ Genre:yup.string().typeError('Field Should not be empty').required('Required Fie
     <TextField variant="outlined" onInput={(e=>setDescription(e.target.value))}
     onChange={handleChange} onBlur={handleBlur} error={errors.Description && touched.Description} value={values.Description}
     helperText={errors.Description && touched.Description && errors.Description}  name='Description' id='Description'
-      color='success' label='Description' type='text'  multiline maxRows={5} className='booktextfield' placeholder="Description" /><br />
+      color='success' label='Description' type='text'  multiline maxRows={5} minRows={5} className='booktextfield' placeholder="Description" /><br />
  <br/><br/><br/>
   <div className='addcancelbutton'>
   <Button onClick={() => history.goBack()} color='error' variant='contained' className='cancel'>Cancel</Button>

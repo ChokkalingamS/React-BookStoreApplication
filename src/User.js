@@ -9,6 +9,7 @@ import TextField from '@mui/material/TextField';
 import Rating from '@mui/material/Rating';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
+import CircularProgress from '@mui/material/CircularProgress';
 import { InputAdornment, Tooltip } from '@mui/material';
 import { forwardRef } from "react";
 import Stack from '@mui/material/Stack';
@@ -17,7 +18,8 @@ import MuiAlert from '@mui/material/Alert';
 import { user_url, book_url } from './App';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-
+import emptycart from './emptycart.svg';
+import noorder from './noorder.svg';
 export function Dashboard() {
   const [data, setData] = useState(null);
   const token = localStorage.getItem('$auth');
@@ -40,13 +42,15 @@ export function Dashboard() {
   // }
   return (
     <div className='dashboard'>
-      {!(data) ? <div>Loading</div> :
+      {!(data) ? <div><CircularProgress id='profileprogress' color='success'></CircularProgress></div> :
         <div className='profile'><UpdateProfile data={data} /></div>}
     </div>);
 }
-function UpdateProfile({ data }) {
-  const token = localStorage.getItem('$auth');
+function UpdateProfile({ data })
+ {
 
+  const token = localStorage.getItem('$auth');
+  const [progress, setProgress] = useState(0); // Progress Bar
   const { FirstName: fname, LastName: lname, Email, Mobile: phone, Address: addr } = data;
   let history = useHistory();
 
@@ -82,18 +86,24 @@ function UpdateProfile({ data }) {
 
 
   const update = (userData) => {
+    setProgress(1);
     axios({
       url: `${user_url}/profileupdate`,
       method: 'PUT',
       data: userData,
       headers: { 'x-auth-token': token }
-    }).then(response=>response.data).then(data=>{setMessage({msg:data.Msg,result:'success'});setTimeout(() => history.push('/'),1500)})
-    .catch((error) => setMessage({ msg: error.response.data.Msg, result: 'error' }))
+    }).then(response=>response.data).then(data=>{setMessage({msg:data.Msg,result:'success'});setTimeout(() => history.goBack(),1500)})
+    .catch((error) => {setMessage({ msg: error.response.data.Msg, result: 'error' });setProgress(0)})
     .then(handleClick)
     
   };
   localStorage.setItem('$name',FirstName)
-  return (<div className='profiletextfieldcontainer'>
+  return (
+      <div>
+            {/* Condional Rendering after submit */}
+    {(progress === 1) && <CircularProgress id='profileprogress' color='success'></CircularProgress>}
+
+    <div className='profiletextfieldcontainer'>
     <form onSubmit={handleSubmit}>
     <TextField variant="outlined"  onInput={(e) => setFirstName(e.target.value)}
       onChange={handleChange} onBlur={handleBlur} error={errors.FirstName && touched.FirstName} value={values.FirstName}
@@ -130,12 +140,15 @@ function UpdateProfile({ data }) {
           </Alert>
         </Snackbar>
       </Stack>
+  </div>
   </div>);
 }
 export function MyCart() {
   const [data, setData] = useState('');
   const Email = localStorage.getItem('Email');
   const token = localStorage.getItem('$auth');
+  const [progress,setProgress]=useState(0)
+  const [show,setShow]=useState(0);
 
   const getCartData = () => {
     axios(
@@ -145,11 +158,18 @@ export function MyCart() {
         data: { Email },
         headers: { 'x-auth-token': token }
       }).then(response => setData(response.data.OrderedBooks));
+
+      setTimeout(() => {
+        setShow(1)
+      }, 3000);
+
   };
   useEffect(getCartData, [Email]);
-  return (<div><Typography variant="h4" align='left' component="div">My Cart</Typography>
+  return (<div><div className='heading'><Typography variant="h4" align='left' component="div">My Cart</Typography></div>
+          {(show === 0) && <CircularProgress id='cartprogress' color='success'></CircularProgress>}
     <div className='mycart'>
-      {((!data) || !(data.length)) ? <p>Cart Empty</p> : data.map((data, i) => { return <div className='cartbook' key={i}> <CartBooks data={data} getCartData={getCartData} visibility={false} /></div>; })}
+      {((!data) || !(data.length)) ? (show) ?<div className='emptycart'><img src={emptycart} alt='logo'/> </div>:''
+       : data.map((data, i) => { return <div className='cartbook' key={i}> <CartBooks data={data} getCartData={getCartData} visibility={false} /></div>; })}
     </div>
   </div>);
 }
@@ -158,7 +178,7 @@ export function MyCart() {
 
 
 function CartBooks({ data, getCartData }) {
-  const [DelCart, setDelCart] = useState('');
+  
   let history = useHistory();
   const token = localStorage.getItem('$auth');
   const Email = localStorage.getItem('Email');
@@ -187,7 +207,7 @@ function CartBooks({ data, getCartData }) {
       .catch(error=>setMessage({msg:error.response.data.Msg,result:'error'})).then(handleClick)
       .then(() =>setTimeout(() =>getCartData(),1000) );
   };
-  console.log(DelCart, 'delete');
+  
   return (<div>
     <Card sx={{ maxWidth: 800 }} className='CartBook'>
       <div className='cartcontainer'>
@@ -243,7 +263,7 @@ export function OrderBook() {
   useEffect(getBooks, [id]);
   console.log(data, 'orderbook');
   return (<div className='Orderbookcontainer'>
-    {!(data) ? <div>Loading</div> : <PlaceOrder data={data} showcount={true} />}
+    {!(data) ? <div>{<CircularProgress id='orderbookprogress' color='warning'></CircularProgress>}</div> : <PlaceOrder data={data} showcount={true} />}
   </div>);
 }
 
@@ -257,6 +277,7 @@ function PlaceOrder({ data }) {
   const [count, setCount] = useState(1);
   const token = localStorage.getItem('$auth');
   const Email = localStorage.getItem('Email');
+  const [progress,setProgress]=useState(0);
 
   const [Message,setMessage]=useState('');
   // Snack Bar Open/Close Status
@@ -271,6 +292,7 @@ function PlaceOrder({ data }) {
 
 
   const orderBook = (_id, total) => {
+    setProgress(1)
     axios(
       {
         url: `${book_url}/orderbooks/${_id}`,
@@ -278,9 +300,11 @@ function PlaceOrder({ data }) {
         data: { Email, total },
         headers: { 'x-auth-token': token }
       }).then(response => response.data).then(data=>{setMessage({msg:data.Msg,result:'success'});setTimeout(() => history.push('/message'),1500);})
-        .catch(error=>error.response.data).then(data=>setMessage({msg:data.Msg,result:'error'})).then(handleClick)
+        .catch(error=>error.response.data).then(data=>{setMessage({msg:data.Msg,result:'warning'});setProgress(0)}).then(handleClick)
     };
   return (<div>
+    {(progress === 1) && <CircularProgress id='orderbookprogress' color='warning'></CircularProgress>}
+    
     <Card sx={{ maxWidth: 800 }}>
       <div className='ordercontainer'>
         <div className='thumbnailContainer'>
@@ -339,6 +363,7 @@ export function MyOrders() {
   const [data, setData] = useState(null);
   const token = localStorage.getItem('$auth');
   const Email = localStorage.getItem('Email');
+  const [show,setShow]=useState(0);
 
   const getOrderData = () => {
     axios(
@@ -348,18 +373,30 @@ export function MyOrders() {
         data: { Email },
         headers: { 'x-auth-token': token }
       }).then(response => setData(response.data.OrderedBooks));
+
+      setTimeout(() => {
+        setShow(1)
+      }, 3000);
+
   };
   useEffect(getOrderData, [Email]);
   console.log(data);
-  return (<div className='orders'>
-    <Typography gutterBottom variant="h5" component="div" align="left">My Orders</Typography>
-    {!(data) ? <div>Books Not yet ordered</div> :
+  return (<div>
+      {(show === 0) && <CircularProgress id='orderpageprogress' color='success'></CircularProgress>}
+       <div className='heading'><Typography gutterBottom variant="h5" component="div" align="left">My Orders</Typography></div>
+    <div className='orders'>
+    
+    {((!data) || !(data.length)) ? (show) ?<div className='emptyorder'><img src={noorder} alt='logo'/></div> :''
 
-      <div className='orderbooklist'>
+      :<div className='orderbooklist'>
         {data.map((data, i) => { return (<div key={i}><GetOrderBooks data={data} /> </div>); })}
       </div>}
+  </div>
   </div>);
 }
+
+
+
 function GetOrderBooks({ data }) {
   const { BookName, Author, Imageurl, Price, total, Rating, ExpectedDelivery, _id } = data;
   let history = useHistory();

@@ -15,12 +15,17 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import { Tooltip} from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import Divider from '@mui/material/Divider';
+
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import CardMedia from '@mui/material/CardMedia';
 import { CardActionArea } from '@mui/material';
+import { forwardRef } from "react";
+
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
 import { Login, Signup, ForgotPassword, UpdatePassword } from './UserAuth';
 import { AdminOrderpage, Edit, GetAllUsers,AddBookData } from './AdminContent';
 import { OrderBook, MyCart, MyOrders, Dashboard } from './User';
@@ -207,67 +212,46 @@ function NavigationBar()
     </div>)  
 }
 
-
-// function Counter()
-// {
-//     const[count,setCount]=useState(0);
-//     return(
-//      <div className='button Container'>
-//         <Button onClick={()=>setCount(count+1)}>+</Button>
-//           <b>{count}</b>
-//         <Button onClick={()=>(count!==0)&& setCount(count-1)}>-</Button>
-//     </div>)
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-function Message({message})
-{
-  return (
-  <div className='message'>
-      <p>{message}</p>
-  </div>)
-}
-
 function OrderSuccess() 
 {
   let history=useHistory();
-  useEffect(()=>setTimeout(() => {
-    history.push('/myorders')
-  },5000),[])
-
     return(<div className='success'>
 
       <img src={success} alt='message'/>
       <div>
 
-      </div>
+     
      <Typography variant="h2" color="inherit" component="div">
       <p>Order Confirmed </p> 
     </Typography>
-
+    <div className='confirmpagebutton'>
+    <Button variant='contained' color='primary' onClick={()=>history.push('/myorders')} >Track Order</Button>
+    <Button variant='contained' color='warning' onClick={()=>history.push('/')}>Continue Shopping</Button>
+    </div>
+    </div>
     </div>)
 }
 
 
 function Confirmation() 
 {
-  let history=useHistory();
-  useEffect(()=>setTimeout(() => {
-    history.push('/login')
-  },5000),[])
+  
+ 
+  const [Message,setMessage]=useState({msg:'Verification Completed',result:'success'});
+  // Snack Bar Open/Close Status
+  const [open, setOpen] = useState(false);
+  const Alert = forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
 
-    return(<div className='confirm'>
+  // Snack Bar Open/Close function
+  const handleClick = () => { setOpen(true); };
+  const handleClose = () => { setOpen(false); };
+
+  useEffect(handleClick,[Message])
+
+    return(
+      <div className='confirm'>
 
       <img src={confirm} alt='message'/>
       <div>
@@ -278,9 +262,22 @@ function Confirmation()
       <p> Welcome to the Book Store</p> 
       
     </Typography>
-    {/* <Typography variant="h4" color="inherit" component="div">Verification Completed</Typography> */}
+        
+     {/* Snack Bar */}
+     <Stack spacing={2} sx={{ width: '100%' }}>
+        <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>
+          <Alert severity={Message.result} sx={{ width: '100%' }}>
+            {Message.msg}
+          </Alert>
+        </Snackbar>
+      </Stack>
+    
+    
 
     </div>
+  
+
+
     </div>)
 }
 

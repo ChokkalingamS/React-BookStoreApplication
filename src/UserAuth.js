@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useHistory, useParams } from "react-router-dom";
 import { user_url, context } from './App';
 import booklogo1 from './booklogo1.svg';
-
+import forgotlogo from './forgotlogo.svg';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
@@ -23,6 +23,7 @@ import * as yup from 'yup';
 export function Signup() {
 
   let history = useHistory();
+  const [progress, setProgress] = useState(0);  // Progress Bar
    // Snackbar 
    const [Message, setMessage] = useState(''); // Server Message
    // Snack bar Open/Close Status
@@ -62,15 +63,18 @@ export function Signup() {
 
 
   const signUp = async (newUser) => {
+    setProgress(1);
     axios(
       {
         url: `${user_url}/signup`,
         method: 'POST',
         data: newUser,
       }).then(response => response.data).then(data=>{setMessage({msg:data.Msg,result:'success'});}) 
-      .catch((error) => setMessage({ msg: error.response.data.Msg, result: 'warning' })).then(handleClick)
+      .catch((error) => setMessage({ msg: error.response.data.Msg, result: 'warning' })).then(handleClick).then(() => setProgress(0));
   };
   return (<div>
+          {/* Progress Bar rendered based on condition */}
+    {(progress === 1) && <CircularProgress id='signupprogress' color='success'></CircularProgress>}
       <div className='signupcontainer'>
     <div> <img src={booklogo1} alt='logo' className='booklogo1'/></div>
     <div className='signup'>
@@ -135,13 +139,15 @@ export function Login() {
   const [Result, setResult] = useState('');
   const [Message, setMessage] = useState('');
 
+  const [progress, setProgress] = useState(0);  // Progress Bar
+
   // Snack Bar Open/Close Status
   const [open, setOpen] = useState(false);
   const Alert = forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
   // Snack Bar Open/Close function
-  const handleClick = () => { setOpen(true); };
+  const handleClick = () => { setOpen(true);; setProgress(0) };
   const handleClose = () => { setOpen(false); };
 
 
@@ -169,30 +175,16 @@ export function Login() {
     };
 
   const logIn = async (userdata) => {
+    setProgress(1);
     axios(
       {
         url: `${user_url}/login`,
         method: "POST",
         data: userdata
       }).then(response => response)
-      .then((data) => setResult(data)).then(_ => history.push('/'))
+      .then((data) => setResult(data)).then(_ => {history.push('/');setProgress(0)})
       .catch((error) => {setMessage({ msg: error.response.data.Msg, result: 'error' });handleClick()})
   };
-
-// console.log(Result);
-//   const getData = () => {
-//     const token = localStorage.getItem('$auth');
-//     const Email = localStorage.getItem('Email');
-//     axios({
-//       url: `${user_url}/getuser`,
-//       method: 'POST',
-//       data: { Email },
-//       headers: { 'x-auth-token': token }
-//     }).then(response => localStorage.setItem('$user', response.data.User)).then(_ => history.push('/'));
-//   };
-
-// }).then(response => localStorage.setItem('$user', response.data.User)).then(_ => history.push('/')).then(_ => window.location.reload());
-
 
   useEffect(() => {
     function authenticate() {
@@ -212,6 +204,7 @@ export function Login() {
   }, [Result]);
 
   return (  <div>
+      {(progress === 1) && <CircularProgress id='loginprogress' color='primary'></CircularProgress>}
     <div className='logincontainer'>
       <div> <img src={booklogo1} alt='logo' className='booklogo1'/></div>
     <div className='login'>
@@ -261,6 +254,7 @@ export function ForgotPassword() {
   let history = useHistory();
   const [Email, setEmail] = useState('');
   
+  const [progress, setProgress] = useState(0); // Progress Bar
   const [Message, setMessage] = useState('');
 
   // Snack Bar Open/Close Status
@@ -288,17 +282,23 @@ export function ForgotPassword() {
     })
 
   const forgotPassword = async (userdata) => {
+    setProgress(1);
     axios(
       {
         url: `${user_url}/forgotpassword`,
         method: 'POST',
         data: userdata
       }).then(response => response.data).then(data=>{setMessage({msg:data.Msg,result:'success'});}) 
-      .catch((error) => setMessage({ msg: error.response.data.Msg, result: 'warning' })).then(handleClick)
+      .catch((error) => setMessage({ msg: error.response.data.Msg, result: 'warning' })).then(handleClick).then(()=>setProgress(0))
   };
 console.log(Message);
 
-  return (<div> 
+  return (<div className='forgotpage'> 
+
+        {/* Condional Rendering after submit */}
+    {(progress === 1) && <CircularProgress id='forgotprogress' color='primary'></CircularProgress>}
+    <img src={forgotlogo} alt='logo'/>
+
     <div className='forgotpassword'>
       
       <Typography gutterBottom variant="h5" className='forgotpasswordheading'  component="div">Forgot Password</Typography>
@@ -311,8 +311,6 @@ console.log(Message);
       <Button type="submit" fullWidth variant='contained' color='warning' >Submit</Button>
       </form><br/>
       <Button type="submit" className='forgotpasswordback' variant='contained' color='primary' onClick={() => history.push('/login')}>Back</Button>
-    </div>
-
       {/* Snack Bar */}
       <Stack spacing={2} sx={{ width: '100%' }}>
       <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>
@@ -322,6 +320,10 @@ console.log(Message);
       </Snackbar>
     </Stack>
 
+    
+    </div>
+
+      
 
 
 
@@ -330,12 +332,12 @@ console.log(Message);
 
 
 }
-export function UpdatePassword() {
+export function UpdatePassword() 
+{
+  const [progress, setProgress] = useState(0);  // Progress Bar
   const { id: token } = useParams();
-  const [Password, setPassword] = useState('');
-  const [result, setResult] = useState('');
   const [Message, setMessage] = useState('');
-
+  let history =useHistory();
 
 
   // Snack Bar Open/Close Status
@@ -370,21 +372,20 @@ export function UpdatePassword() {
       };
 
   const Changepassword = async (userdata) => {
+    setProgress(1);
     axios(
       {
         url: `${user_url}/updatepassword`,
         method: 'POST',
         data: userdata
-      }).then(response => response.data).then(data=>{setMessage({msg:data.Msg,result:'success'});}) 
-      .catch((error) => setMessage({ msg: error.response.data.Msg, result: 'warning' })).then(handleClick)
-      
-      
-      // .then(response => response)
-      // .then(response => setResult(response));
+      }).then(response => response.data).then(data=>{setMessage({msg:data.Msg,result:'success'});setTimeout(() =>history.push('/login'), 2000);}) 
+      .catch((error) => {setMessage({ msg: error.response.data.Msg, result: 'warning' });setProgress(0);}).then(handleClick)
   };
   
 
   return (<div>
+
+{(progress === 1) && <CircularProgress id='changepasswordprogress' color='primary'></CircularProgress>}
       <div className='updatepassword'>
 
     <Typography gutterBottom variant="h5" className='updatepasswordheading'  component="div">Change Password</Typography>
@@ -392,7 +393,7 @@ export function UpdatePassword() {
     <form onSubmit={handleSubmit}>
 
     <TextField type="text"   className='updatepasswordtextfield' 
-     onChange={handleChange} onBlur={handleBlur} error={errors.Password && touched.Password} value={values.Password} onInput={(e)=>e.target.value}
+     onChange={handleChange} onBlur={handleBlur} error={errors.Password && touched.Password}  
      helperText={errors.Password && touched.Password && errors.Password}  name='Password' id='Password' type={visible}
      placeholder="Password"   InputProps={{
        endAdornment: (<InputAdornment position="start">

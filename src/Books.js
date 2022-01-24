@@ -43,7 +43,8 @@ export function Home() {
 
   return (
     <div className='booksContainer'>
-      {(!data.length) ? <p>Loading</p> : data.map((books, i) => { return <div className='book' key={i}><Books data={books} getBooks={getBooks} visibility={true} />   </div>; })}
+      {(!data.length) ?<div><CircularProgress id='dataprogress'></CircularProgress></div>:
+       data.map((books, i) => { return <div className='book' key={i}><Books data={books} getBooks={getBooks} /></div>; })}
     </div>);
 }
 
@@ -92,6 +93,7 @@ function Books({ data,getBooks }) {
       .catch((error) => setMessage({ msg: error.response.data.Msg, result: 'warning' })).then(handleClick).then(() => getBooks());
   }
   return (<div>
+
     <Card sx={{ maxWidth: 450 }} className='card'>
 
       <div className='thumbnailContainer'>
@@ -153,7 +155,7 @@ export function NewArrivals() {
   useEffect(getBooks, []);
 
   return (<div>
-    <Typography gutterBottom variant="h5" component="div" align="left">Upcoming Books</Typography>
+    <div className='heading'><Typography gutterBottom variant="h5" component="div" align="left">Upcoming Books</Typography></div>
     {(!data) ? <div>...Loading</div> :
       <div className='upcomingbooks'>
         {data.map((data, i) => {
@@ -244,7 +246,7 @@ export function BooksCategory() {
     <div className='home'>
       <div><Category /></div>
       <div className='CategorybooksContainer'>
-        {(!data.length) ? <p>Loading</p> : data.map((books, i) => { return <div className='book' key={i}><Books data={books} getBooks={getBooks} visibility={true} />   </div>; })}
+        {(!data.length) ? <div><CircularProgress id='categorydataprogress'></CircularProgress></div>: data.map((books, i) => { return <div className='book' key={i}><Books data={books} getBooks={getBooks} visibility={true} />   </div>; })}
       </div>
     </div>);
 }
@@ -279,10 +281,14 @@ export function FilterCategory() {
   return (<div className='home'>
     <div><Category /></div>
     <div className='CategorybooksContainer'>
-      {(!data.length) ? <p>Loading</p> : data.map((books, i) => { return <div className='book' key={i}><Books data={books} visibility={true} />   </div>; })}
+      {(!data.length) ? <div><CircularProgress id='categorydataprogress'></CircularProgress></div>
+       : data.map((books, i) => { return <div className='book' key={i}><Books data={books} visibility={true} />   </div>; })}
     </div>
   </div>);
 }
+
+
+
 // Books Info Individual
 export function BookInfo() {
   const { id } = useParams();
