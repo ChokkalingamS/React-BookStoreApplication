@@ -214,6 +214,9 @@ function Category() {
 
   </div>);
 }
+
+
+
 export function BooksCategory() {
 
   const [data, setData] = useState('');
@@ -238,6 +241,10 @@ export function BooksCategory() {
       </div>
     </div>);
 }
+
+
+
+
 export function FilterCategory() {
   const { id } = useParams();
   const [data, setData] = useState([]);
@@ -245,7 +252,7 @@ export function FilterCategory() {
   const [Url, setUrl] = useState('');
 
   const urlchange = () => {
-    if ((id === 'Fantasy') || (id === 'Fiction') || (id === 'Science') || (id === 'Comics') || (id === 'Engineering')) {
+    if ((id === 'Fantasy') || (id === 'Fiction') || (id === 'Science') || (id === 'Comics') || (id === 'Engineering') || (id==='Romance') ||(id==='Poetry')) {
       setUrl(`getbooksbygenre?genre=${id}`);
     }
 
