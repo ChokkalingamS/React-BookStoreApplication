@@ -19,6 +19,10 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import { book_url } from './App';
 
+
+
+
+
 export function Home() {
 
   const [data, setData] = useState('');
@@ -43,11 +47,10 @@ export function Home() {
 }
 
 
+
 function Books({ data,getBooks }) {
   const { BookName, Author, Imageurl, Price, Rating: rating, _id } = data;
   
-  
-
   let history = useHistory();
 
   const token = localStorage.getItem('$auth');
@@ -134,6 +137,10 @@ function Books({ data,getBooks }) {
     
     </div>);
 }
+
+
+
+
 export function NewArrivals() {
 
   const [data, setData] = useState(null);
@@ -179,6 +186,8 @@ export function NewArrivals() {
       </div>}
   </div>);
 }
+
+
 function Category() {
   const [Genre, setGenre] = useState(null);
   const [Author, setAuthor] = useState(null);
@@ -297,7 +306,7 @@ export function BookInfo() {
   };
   useEffect(getBooks, [id]);
   return (<div>
-    {!(data) ? <div>Loading</div> : <IndividualBookData data={data} />}
+    {!(data) ? <div><CircularProgress id='newarrivaldataprogress'></CircularProgress></div> : <IndividualBookData data={data} />}
   </div>);
 }
 function IndividualBookData({ data }) {
@@ -314,7 +323,6 @@ function IndividualBookData({ data }) {
           </Typography>
           <p><b>Author</b> : {Author}</p>
           <Typography><b>Description</b> :{Description}</Typography>
-          {/* <p><b>Rating</b> : {Rating}</p> */}
           <Stack>
             <Rating name="half-rating-read" defaultValue={+rating} precision={0.5} readOnly />
           </Stack>

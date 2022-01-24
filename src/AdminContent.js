@@ -287,7 +287,7 @@ export function GetAllUsers() {
     
   };
   useEffect(get, [token,Email]);
-  return (<div>
+  return (<div> <div className='heading'><Typography variant="h5" component="div"><p>Customer List</p></Typography></div>
     {(!data) ? <div><CircularProgress id='newarrivaldataprogress'></CircularProgress></div> : <div>
     <TableContainer component={Paper} id="table">
         <Table sx={{ minWidth:400}} aria-label="simple table">
@@ -296,8 +296,8 @@ export function GetAllUsers() {
         <TableCell align="center">S.No</TableCell>  
         <TableCell align="center">Name</TableCell>
         <TableCell align="center">Email</TableCell>
-        <TableCell align="center">Address</TableCell>
         <TableCell align="center">Mobile</TableCell>
+        <TableCell align="center">Address</TableCell>
         </TableRow>
         </TableHead>
       {data.map((data, i) => { return <TableBody key={i}>
