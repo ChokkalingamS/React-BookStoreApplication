@@ -485,7 +485,7 @@ body
 
 }
 
-#editbookprogress,#addbookprogress
+#editbookprogress,#addbookprogress,#newarrivaldataprogress
 {
   position: absolute;
   margin-left:40rem;
