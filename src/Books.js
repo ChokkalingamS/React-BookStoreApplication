@@ -185,67 +185,45 @@ export function NewArrivals() {
 
 
       </div>}
-      <SearchBooks/>
+      {/* <SearchBooks/> */}
   </div>);
 }
 
 
-function SearchBooks()
-{
-  const [books,setBooks]=useState('')
-  const [data,setData]=useState({})
+// function SearchBooks()
+// {
+//   const [books,setBooks]=useState('')
+//   const [data,setData]=useState('')
   
 
-  const getBook=(books)=>{
-    axios({
-      url:`${book_url}/booksbyname/${books}`,
-      method:'GET',
-    }).then(response=>response.data).then(data=>setData(data))
-  }
-  return(<div>
-              <TextField label='Search' placeholder='Searchbar' onChange={(e)=>setBooks(e.target.value)}></TextField>
-              <Button onClick={()=>getBook(books)}> Search</Button>
-              {(data)&&<Book data={data}/>}
-  </div>)
+//   const getBook=(books)=>{
+//     axios({
+//       url:`${book_url}/booksbyname/${books}`,
+//       method:'GET',
+//     }).then(response=>response.data).then(data=>setData(data))
+//   }
+//   return(<div>
+//               <TextField label='Search' placeholder='Searchbar' onChange={(e)=>setBooks(e.target.value)}></TextField>
+//               <Button onClick={()=>getBook(books)}> Search</Button>
+//               {(data)&&<Book data={data}/>}
+//   </div>)
 
 
-function Book({data})
-{
-  const {BookName,Author,Description,Language,Publisher,Imageurl,Price}=data;
+// function Book({data})
+// {
+//   const {BookName,Author,Description,Language,Publisher,Imageurl,Price}=data;
 
-  return(<div>
-            <p>Book Name:{BookName}</p>
-            <p>Author : {Author}</p>
-            <p>Description :{Description}</p>
-            <p>Language : {Language}</p>
-            <p>Publisher : {Publisher}</p>
-            <p>Price:{Price}</p>
-  </div>)
-}
+//   return(<div>
+//             <p>Book Name:{BookName}</p>
+//             <p>Author : {Author}</p>
+//             <p>Description :{Description}</p>
+//             <p>Language : {Language}</p>
+//             <p>Publisher : {Publisher}</p>
+//             <p>Price:{Price}</p>
+//   </div>)
+// }
 
-
-
-
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// }
 
 
 
